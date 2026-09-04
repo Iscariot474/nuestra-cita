@@ -13,19 +13,266 @@
 
     <main id="app">
 
+        <!-- ========================= -->
+        <!-- PAGE 1 - INTRO            -->
+        <!-- ========================= -->
+
         <section class="page active" id="page1">
-            <h1>Hola, tú... 🥺</h1>
 
-            <p>
-                Tengo una pregunta muy importante que hacerte...
-            </p>
+            <div class="heart-decoration">♡</div>
 
-            <button onclick="nextPage()">
-                Quiero saber 👀
-            </button>
+            <div class="content">
+
+                <div class="emoji-big">🥺</div>
+
+                <h1>Hola, tú... 🥺</h1>
+
+                <p>
+                    Tengo una pregunta muy importante que hacerte...
+                </p>
+
+                <button class="main-button" onclick="nextPage(2)">
+                    Quiero saber 👀
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================= -->
+        <!-- PAGE 2 - THE QUESTION      -->
+        <!-- ========================= -->
+
+        <section class="page" id="page2">
+
+            <div class="floating-hearts">
+                ❤️
+            </div>
+
+            <div class="content">
+
+                <div class="emoji-big">💭</div>
+
+                <p class="thinking-text">
+                    I've been thinking about this for a while...
+                </p>
+
+                <h1>
+                    Will you be my date "Nuestra primera Cita"? ❤️
+                </h1>
+
+                <div class="question-buttons">
+
+                    <button
+                        class="yes-button"
+                        onclick="nextPage(3)"
+                    >
+                        ❤️ YES ❤️
+                    </button>
+
+                    <button
+                        class="no-button"
+                        id="noButton"
+                    >
+                        no
+                    </button>
+
+                </div>
+
+                <p class="little-message" id="noMessage"></p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================= -->
+        <!-- PAGE 3 - DATE DETAILS      -->
+        <!-- ========================= -->
+
+        <section class="page" id="page3">
+
+            <div class="content date-content">
+
+                <div class="emoji-big">🥰</div>
+
+                <h1>
+                    Entonces... hagámoslo oficial ❤️
+                </h1>
+
+                <p class="subtitle">
+                    Elige los detalles de nuestra cita
+                </p>
+
+
+                <div class="date-card">
+
+                    <!-- DATE -->
+
+                    <div class="input-group">
+
+                        <label for="date">
+                            📅 Date:
+                        </label>
+
+                        <input
+                            type="date"
+                            id="date"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- LOCATION -->
+
+                    <div class="input-group">
+
+                        <label for="location">
+                            📍 Location:
+                        </label>
+
+                        <input
+                            type="text"
+                            id="location"
+                            placeholder="¿Dónde nos vemos?"
+                            maxlength="100"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- DRESS CODE -->
+
+                    <div class="dress-code">
+
+                        <div class="dress-icon">
+                            ❤️
+                        </div>
+
+                        <div>
+                            <strong>Dress code:</strong>
+
+                            <p>
+                                Just come as you are.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="main-button"
+                    onclick="confirmDate()"
+                >
+                    Continuar ❤️
+                </button>
+
+                <p
+                    class="error-message"
+                    id="formError"
+                ></p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================= -->
+        <!-- PAGE 4 - CONFIRMATION      -->
+        <!-- ========================= -->
+
+        <section class="page" id="page4">
+
+            <div class="confetti" id="confetti"></div>
+
+            <div class="content confirmation-content">
+
+                <div class="celebration">
+                    🎉
+                </div>
+
+                <div class="emoji-big celebration-face">
+                    🥰
+                </div>
+
+                <h1>
+                    ¡TENEMOS UNA CITA! ❤️
+                </h1>
+
+                <p class="confirmation-text">
+                    ¡Yay! No puedo esperar a verte. 🥹❤️
+                </p>
+
+
+                <div class="confirmation-card">
+
+                    <div class="confirmation-item">
+
+                        <span>📅</span>
+
+                        <div>
+                            <small>Date</small>
+                            <strong id="confirmedDate">
+                                —
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="confirmation-item">
+
+                        <span>📍</span>
+
+                        <div>
+                            <small>Location</small>
+                            <strong id="confirmedLocation">
+                                —
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="confirmation-item">
+
+                        <span>❤️</span>
+
+                        <div>
+                            <small>Dress code</small>
+                            <strong>
+                                Just come as you are.
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <p class="final-message">
+                    Officially a date. ❤️
+                </p>
+
+
+                <button
+                    class="share-button"
+                    onclick="shareDate()"
+                >
+                    💌 Compartir
+                </button>
+
+            </div>
+
         </section>
 
     </main>
+
 
     <script src="script.js"></script>
 
