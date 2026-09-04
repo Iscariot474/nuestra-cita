@@ -233,18 +233,20 @@ button {
 
     width: 100%;
 
-    min-height: 130px;
+    min-height: 100px;
 
     display: flex;
 
     align-items: center;
     justify-content: center;
 
-    gap: 20px;
+    gap: 18px;
 }
 
 
 .yes-button {
+    position: relative;
+   
     padding: 18px 38px;
 
     border-radius: 999px;
@@ -261,6 +263,8 @@ button {
         0 12px 30px rgba(200, 70, 95, 0.3);
 
     z-index: 10;
+   
+    white-space: nowrap;
 }
 
 
@@ -275,15 +279,17 @@ button {
 /* THE TINY NO BUTTON 😂 */
 
 .no-button {
-    position: absolute;
+    position: relative;
 
-    padding: 2px 5px;
+    padding: 3px 7px;
+
+    min-width: 22px;
 
     font-size: 9px;
 
     line-height: 1;
 
-    border-radius: 4px;
+    border-radius: 5px;
 
     background: #e5cfd3;
 
@@ -291,12 +297,24 @@ button {
 
     z-index: 20;
 
+    cursor: default;
+
     transition:
         left 0.15s ease,
         top 0.15s ease,
         transform 0.15s ease;
+   
+   white-space: nowrap;
 }
 
+/*
+   Once JavaScript makes the button
+   "fixed", it can escape anywhere.
+*/
+
+.no-button.running {
+    position: fixed;
+}
 
 .no-button:hover {
     transform: scale(0.7);
