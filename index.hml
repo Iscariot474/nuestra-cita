@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Una pregunta para ti ❤️</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main id="app">
+
+        <section class="page active" id="page1">
+            <h1>Hola, tú... 🥺</h1>
+
+            <p>
+                Tengo una pregunta muy importante que hacerte...
+            </p>
+
+            <button onclick="nextPage()">
+                Quiero saber 👀
+            </button>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
