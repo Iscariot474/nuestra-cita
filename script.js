@@ -7,20 +7,37 @@ function nextPage(pageNumber) {
     const currentPage =
         document.querySelector(".page.active");
 
-    const nextPage =
-        document.getElementById("page" + pageNumber);
+    const targetPage =
+        document.getElementById(
+            "page" + pageNumber
+        );
 
-    if (!nextPage) {
+
+    if (!targetPage) {
+
+        console.error(
+            "Page not found:",
+            pageNumber
+        );
+
         return;
     }
 
-    currentPage.classList.remove("active");
 
-    setTimeout(() => {
+    if (currentPage) {
+        currentPage.classList.remove("active");
+    }
 
-        nextPage.classList.add("active");
 
-    }, 50);
+    targetPage.classList.add("active");
+
+
+    /*
+       Scroll back to the top just in case
+       the browser has moved the viewport.
+    */
+
+    window.scrollTo(0, 0);
 }
 
 
@@ -42,55 +59,63 @@ const messages = [
     "¿Segura? 🥺",
     "¿De verdad? 😭",
     "Piénsalo otra vez...",
-    "Ese botón es muy pequeño 😂",
+    "Ese botón no funciona 😂",
     "¿Quizás mejor YES? ❤️",
     "Casi... 😈",
     "No te voy a dejar tan fácil 😂",
-    "Última oportunidad... 🥺❤️"
+    "¡Vamos, di que sí! 🥺❤️"
 ];
 
 
-function moveNoButton() {
+function moveNoButton(event) {
+
+    if (event) {
+        event.preventDefault();
+    }
 
     noAttempts++;
 
-    const page =
-        document.getElementById("page2");
 
-    const pageRect =
-        page.getBoundingClientRect();
+    /*
+       Change the button to fixed positioning
+       the first time she tries to click it.
+    */
 
-    const buttonRect =
-        noButton.getBoundingClientRect();
+    noButton.classList.add("running");
 
 
-    const padding = 25;
+    const buttonWidth =
+        noButton.offsetWidth;
+
+    const buttonHeight =
+        noButton.offsetHeight;
+
+
+    const padding = 20;
 
 
     const maxX =
-        pageRect.width -
-        buttonRect.width -
+        window.innerWidth -
+        buttonWidth -
         padding;
 
 
     const maxY =
-        pageRect.height -
-        buttonRect.height -
+        window.innerHeight -
+        buttonHeight -
         padding;
 
 
     const newX =
-        Math.max(
-            padding,
-            Math.random() * maxX
-        );
+        padding +
+        Math.random() *
+        Math.max(1, maxX - padding);
 
 
     const newY =
-        Math.max(
-            padding,
-            Math.random() * maxY
-        );
+        padding +
+        Math.random() *
+        Math.max(1, maxY - padding);
 
 
     noButton.style.left =
@@ -100,25 +125,76 @@ function moveNoButton() {
         newY + "px";
 
 
-    if (noAttempts <= messages.length) {
+    /*
+       Change the message.
+    */
 
-        noMessage.textContent =
-            messages[noAttempts - 1];
+    const messageIndex =
+        Math.min(
+            noAttempts - 1,
+            messages.length - 1
+        );
 
-    }
+
+    noMessage.textContent =
+        messages[messageIndex];
 
 
-    /* Make it smaller every time */
+    /*
+       Make NO progressively smaller.
+    */
 
     const scale =
         Math.max(
             0.45,
-            1 - (noAttempts * 0.06)
+            1 - noAttempts * 0.06
         );
+
 
     noButton.style.transform =
         `scale(${scale})`;
 }
+
+
+/*
+   Desktop:
+   move when mouse gets close.
+*/
+
+noButton.addEventListener(
+    "mouseenter",
+    moveNoButton
+);
+
+
+/*
+   Mobile:
+   move when she touches it.
+*/
+
+noButton.addEventListener(
+    "touchstart",
+    moveNoButton,
+    {
+        passive: false
+    }
+);
+
+
+/*
+   Also prevent an actual click.
+*/
+
+noButton.addEventListener(
+    "click",
+    function (event) {
+
+        event.preventDefault();
+
+        moveNoButton(event);
+
+    }
+);
 
 
 /* Desktop */
@@ -181,49 +257,72 @@ dateInput.min =
 
 function confirmDate() {
 
-    const date =
-        dateInput.value;
+    const dateInput =
+        document.getElementById("date");
 
-    const location =
-        document
-            .getElementById("location")
-            .value
-            .trim();
+    const locationInput =
+        document.getElementById("location");
 
     const error =
         document.getElementById("formError");
 
 
-    /* Validation */
+    const date =
+        dateInput.value;
+
+    const location =
+        locationInput.value.trim();
+
+
+    /*
+       Validate date
+    */
 
     if (!date) {
 
         error.textContent =
             "Elige un día para nuestra cita ❤️";
 
+        dateInput.focus();
+
         return;
     }
 
+
+    /*
+       Validate location
+    */
 
     if (!location) {
 
         error.textContent =
             "¿Dónde nos vemos? 📍";
 
+        locationInput.focus();
+
         return;
     }
 
 
+    /*
+       Everything is valid
+    */
+
     error.textContent = "";
 
 
-    /* Format date */
+    /*
+       Format date
+    */
 
     const formattedDate =
         formatDate(date);
 
 
-    /* Put information on page 4 */
+    /*
+       Put the selected information
+       onto Page 4.
+    */
 
     document.getElementById(
         "confirmedDate"
@@ -237,13 +336,14 @@ function confirmDate() {
         location;
 
 
-    /* Save locally */
+    /*
+       Save locally.
+    */
 
     localStorage.setItem(
         "date",
         date
     );
-
 
     localStorage.setItem(
         "location",
@@ -251,20 +351,28 @@ function confirmDate() {
     );
 
 
-    /* Go to confirmation */
+    /*
+       GO TO PAGE 4 ❤️
+    */
 
     nextPage(4);
 
 
-    /* Celebration */
+    /*
+       Start celebration shortly
+       after the page appears.
+    */
 
-    setTimeout(() => {
+    setTimeout(
+        function () {
 
-        createConfetti();
+            createConfetti();
 
-        playCelebrationSound();
+            playCelebrationSound();
 
-    }, 500);
+        },
+        300
+    );
 }
 
 
